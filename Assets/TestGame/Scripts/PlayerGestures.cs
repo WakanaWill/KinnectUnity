@@ -11,6 +11,7 @@ public class PlayerGestures : MonoBehaviour, KinectGestures.GestureListenerInter
 	private bool swipeRight;
 	private bool tPose;
 	private bool jump;
+	private bool magdaPose;
 
 
 	public bool IsSwipeLeft()
@@ -51,6 +52,17 @@ public class PlayerGestures : MonoBehaviour, KinectGestures.GestureListenerInter
 		if (jump)
 		{
 			jump = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsMagdaPose()
+	{
+		if(magdaPose)
+		{
+			magdaPose = false;
 			return true;
 		}
 

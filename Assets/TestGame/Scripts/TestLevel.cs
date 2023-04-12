@@ -48,25 +48,30 @@ public class TestLevel : MonoBehaviour
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 0)
+		if(slideChangeWithGestures && gestureListener && currentMoveId == 0)
+				{
+			if (gestureListener.IsMagdaPose())
+				NextMove();
+		}
+		if (slideChangeWithGestures && gestureListener && currentMoveId == 1)
 		{
 			if (gestureListener.IsSwipeLeft())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 1)
+		if (slideChangeWithGestures && gestureListener && currentMoveId == 2)
 		{
 			if (gestureListener.IsSwipeRight())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 2)
+		if (slideChangeWithGestures && gestureListener && currentMoveId == 3)
 		{
 			if (gestureListener.IsTpose())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 3)
+		if (slideChangeWithGestures && gestureListener && currentMoveId == 4)
 		{
 			if (gestureListener.IsJump())
 				NextMove();
