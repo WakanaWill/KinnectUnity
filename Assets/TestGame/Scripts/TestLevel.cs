@@ -1,22 +1,29 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class TestLevel : MonoBehaviour
 {
 	public bool slideChangeWithGestures = true;
 	public bool slideChangeWithKeys = true;
-	public float spinSpeed = 5;
 
 	public bool autoChangeAlfterDelay = false;
-	public float slideChangeAfterDelay = 5;
 
-	public List<Texture> slideTextures;
-	public List<GameObject> horizontalSides;
+	public Text nextMoveText;
+	public int movesToMake = 5;
+	private int movesMade;
 
-	public List<GameObject> moves;
-	private int currentMoveId;
+	public List<string> movesTextList;
+	string currentMoveToBeMade;
 
+
+
+
+
+
+	public Transform progressBar;
+	public GameObject checkBoxPrefab;
 
 	private PlayerGestures gestureListener;
 
@@ -32,7 +39,10 @@ public class TestLevel : MonoBehaviour
 		// get the gestures listener
 		gestureListener = Camera.main.GetComponent<PlayerGestures>();
 
-		currentMoveId = 0;
+		movesMade = 0;
+		int randomIndex = Random.Range(0, movesTextList.Count);
+		currentMoveToBeMade = movesTextList[randomIndex];
+		nextMoveText.text = movesTextList[randomIndex];
 	}
 
 	void Update()
@@ -48,29 +58,36 @@ public class TestLevel : MonoBehaviour
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 0)
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeLeft")
 		{
 			if (gestureListener.IsSwipeLeft())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 1)
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeRight")
 		{
 			if (gestureListener.IsSwipeRight())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 2)
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Tpose")
 		{
 			if (gestureListener.IsTpose())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveId == 3)
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Jump")
 		{
 			if (gestureListener.IsJump())
 				NextMove();
 
+		}
+
+
+		if(movesMade >= movesToMake)
+        {
+			nextMoveText.text = "Congratulations";
+			currentMoveToBeMade = null;
 		}
 
 	}
@@ -78,14 +95,12 @@ public class TestLevel : MonoBehaviour
 
 	private void NextMove()
     {
-		moves[currentMoveId].SetActive(false);
-		currentMoveId++;
-		moves[currentMoveId].SetActive(true);
+		movesMade++;
+		Instantiate(checkBoxPrefab, progressBar);
+		int randomIndex = Random.Range(0, movesTextList.Count);
+		nextMoveText.text = movesTextList[randomIndex];
+		currentMoveToBeMade = movesTextList[randomIndex];
 
-		if(currentMoveId == 3)
-        {
-			Debug.Log("You Win!");
-        }
 	}
 
 	
