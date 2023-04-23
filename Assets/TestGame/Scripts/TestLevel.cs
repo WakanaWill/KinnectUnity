@@ -18,9 +18,9 @@ public class TestLevel : MonoBehaviour
 	List<string> currentMovesToMakeTextList;
 	string currentMoveToBeMade;
 
+	bool isGameEnded = false;
 
-
-
+	[SerializeField] GameObject timer;
 
 
 	public Transform progressBar;
@@ -34,6 +34,7 @@ public class TestLevel : MonoBehaviour
 	{
 		// hide mouse cursor
 		Cursor.visible = false;
+		timer.SetActive(false);
 
 		currentMovesToMakeTextList = new List<string>();
 
@@ -102,12 +103,19 @@ public class TestLevel : MonoBehaviour
 
 	private void NextMove()
     {
-		if (movesMade >= movesToMake) return;
+		if (movesMade >= movesToMake || isGameEnded) return;
 		movesMade++;
 		Instantiate(checkBoxPrefab, progressBar);
 		nextMoveText.text = movesMade.ToString();
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
 
+	}
+
+	public void GameLost()
+    {
+		nextMoveText.text = "Game Lost";
+		isGameEnded = true;
+		currentMoveToBeMade = null;
 	}
 
 
@@ -123,6 +131,7 @@ public class TestLevel : MonoBehaviour
 			yield return new WaitForSeconds(2f);
 		}
 		nextMoveText.text = movesMade.ToString();
+		timer.SetActive(true);
 	}
 
 
