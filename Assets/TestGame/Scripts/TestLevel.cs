@@ -15,11 +15,12 @@ public class TestLevel : MonoBehaviour
 	private int movesMade;
 
 	public List<string> movesTextList;
+	List<string> currentMovesToMakeTextList;
 	string currentMoveToBeMade;
 
+	bool isGameEnded = false;
 
-
-
+	[SerializeField] GameObject timer;
 
 
 	public Transform progressBar;
@@ -33,16 +34,23 @@ public class TestLevel : MonoBehaviour
 	{
 		// hide mouse cursor
 		Cursor.visible = false;
+		timer.SetActive(false);
 
+		currentMovesToMakeTextList = new List<string>();
 
-		
 		// get the gestures listener
 		gestureListener = Camera.main.GetComponent<PlayerGestures>();
 
+		for(int i = 0; i < movesToMake; i++)
+        {
+			int randomIndex = Random.Range(0, movesTextList.Count);
+			currentMovesToMakeTextList.Add(movesTextList[randomIndex]);
+		}
+
 		movesMade = 0;
-		int randomIndex = Random.Range(0, movesTextList.Count);
-		currentMoveToBeMade = movesTextList[randomIndex];
-		nextMoveText.text = movesTextList[randomIndex];
+		
+		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
+		StartCoroutine(ShowAllMovesToMake());
 	}
 
 	void Update()
@@ -95,15 +103,38 @@ public class TestLevel : MonoBehaviour
 
 	private void NextMove()
     {
+		if (movesMade >= movesToMake || isGameEnded) return;
 		movesMade++;
 		Instantiate(checkBoxPrefab, progressBar);
-		int randomIndex = Random.Range(0, movesTextList.Count);
-		nextMoveText.text = movesTextList[randomIndex];
-		currentMoveToBeMade = movesTextList[randomIndex];
+		nextMoveText.text = movesMade.ToString();
+		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
 
 	}
 
-	
+	public void GameLost()
+    {
+		nextMoveText.text = "Game Lost";
+		isGameEnded = true;
+		currentMoveToBeMade = null;
+	}
+
+
+	IEnumerator ShowAllMovesToMake()
+	{
+		int movesToShow = 0;
+
+		while (movesToShow < movesToMake)
+		{
+			nextMoveText.text = currentMovesToMakeTextList[movesToShow];
+
+			movesToShow++;
+			yield return new WaitForSeconds(2f);
+		}
+		nextMoveText.text = movesMade.ToString();
+		timer.SetActive(true);
+	}
+
+
 
 
 }
