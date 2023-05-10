@@ -23,4 +23,9 @@ public class Timer : MonoBehaviour
             testLevel.GameLost();
         }
     }
+
+    public void SetTimer(float time)
+    {
+        timeLeft = time;
+    }
 }

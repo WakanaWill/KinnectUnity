@@ -28,6 +28,8 @@ public class TestLevel : MonoBehaviour
 
 	private PlayerGestures gestureListener;
 
+	private int lvl = 0;
+
 
 
 	void Start()
@@ -41,14 +43,14 @@ public class TestLevel : MonoBehaviour
 		// get the gestures listener
 		gestureListener = Camera.main.GetComponent<PlayerGestures>();
 
-		for(int i = 0; i < movesToMake; i++)
-        {
+		for (int i = 0; i < movesToMake; i++)
+		{
 			int randomIndex = Random.Range(0, movesTextList.Count);
 			currentMovesToMakeTextList.Add(movesTextList[randomIndex]);
 		}
 
 		movesMade = 0;
-		
+
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
 		StartCoroutine(ShowAllMovesToMake());
 	}
@@ -92,17 +94,18 @@ public class TestLevel : MonoBehaviour
 		}
 
 
-		if(movesMade >= movesToMake)
-        {
-			nextMoveText.text = "Congratulations";
-			currentMoveToBeMade = null;
+		if (movesMade >= movesToMake)
+		{
+			movesMade = 0;
+			lvl++;
+			StartCoroutine(NextGame());
 		}
 
 	}
 
 
 	private void NextMove()
-    {
+	{
 		if (movesMade >= movesToMake || isGameEnded) return;
 		movesMade++;
 		Instantiate(checkBoxPrefab, progressBar);
@@ -112,10 +115,11 @@ public class TestLevel : MonoBehaviour
 	}
 
 	public void GameLost()
-    {
+	{
 		nextMoveText.text = "Game Lost";
 		isGameEnded = true;
 		currentMoveToBeMade = null;
+		timer.SetActive(false);
 	}
 
 
@@ -132,7 +136,30 @@ public class TestLevel : MonoBehaviour
 		}
 		nextMoveText.text = movesMade.ToString();
 		timer.SetActive(true);
+		timer.GetComponent<Timer>().SetTimer(60.0f - (lvl * 5.0f));
 	}
+
+	IEnumerator NextGame()
+	{
+		timer.SetActive(false);
+		nextMoveText.text = "Congratulations";
+		yield return new WaitForSeconds(5f);
+		
+
+		currentMovesToMakeTextList = new List<string>();
+
+		for (int i = 0; i < movesToMake; i++)
+		{
+			int randomIndex = Random.Range(0, movesTextList.Count);
+			currentMovesToMakeTextList.Add(movesTextList[randomIndex]);
+		}
+
+		movesMade = 0;
+
+		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
+		StartCoroutine(ShowAllMovesToMake());
+	}
+
 
 
 
