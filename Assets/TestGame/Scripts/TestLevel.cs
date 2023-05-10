@@ -14,6 +14,8 @@ public class TestLevel : MonoBehaviour
 	public int movesToMake = 5;
 	private int movesMade;
 
+	public Text progress;
+
 	public List<string> movesTextList;
 	List<string> currentMovesToMakeTextList;
 	string currentMoveToBeMade;
@@ -25,7 +27,7 @@ public class TestLevel : MonoBehaviour
 
 	public Transform progressBar;
 	public GameObject checkBoxPrefab;
-
+	private List<GameObject> checkBoxPrefabsList;
 	private PlayerGestures gestureListener;
 
 	private int lvl = 0;
@@ -101,6 +103,8 @@ public class TestLevel : MonoBehaviour
 			StartCoroutine(NextGame());
 		}
 
+		progress.text = $"{movesMade}/{movesToMake}";
+
 	}
 
 
@@ -108,7 +112,6 @@ public class TestLevel : MonoBehaviour
 	{
 		if (movesMade >= movesToMake || isGameEnded) return;
 		movesMade++;
-		Instantiate(checkBoxPrefab, progressBar);
 		nextMoveText.text = movesMade.ToString();
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
 
@@ -143,6 +146,7 @@ public class TestLevel : MonoBehaviour
 	{
 		timer.SetActive(false);
 		nextMoveText.text = "Congratulations";
+		checkBoxPrefabsList = new List<GameObject>();
 		yield return new WaitForSeconds(5f);
 		
 
