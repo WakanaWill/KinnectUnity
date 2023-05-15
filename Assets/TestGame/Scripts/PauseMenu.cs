@@ -6,25 +6,21 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
-    public GameObject Canvas;
-    public GameObject Panel;
-    public GameObject Camera;
 
     bool Paused = false;
     [SerializeField] private GameObject _pauseMenu;
-    [SerializeField] private GameObject _pauseButton;
 
     void Start()
     {
-        Canvas.gameObject.SetActive(false);
+        _pauseMenu.gameObject.SetActive(false);
     }
 
     
     void Update()
     {
-        if (Input.GetKey ("space"))
+        if (Input.GetKeyDown (KeyCode.P))
         {
-            if (!Paused)
+            if (Paused == false)
             {
                 PauseButton();
             }
@@ -34,15 +30,6 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-    public void Resume()
-    {
-        Time.timeScale = 1.0f;
-        Canvas.gameObject.SetActive(false);
-        Panel.gameObject.SetActive(true);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.None;
-    }
-
     public void ReturnToMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -52,19 +39,16 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 0f;
         _pauseMenu.SetActive(true);
-        _pauseButton.SetActive(false);
-        Cursor.visible = false;
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        Panel.gameObject.SetActive(false);
+        Paused = true;
     }
     public void ResumeButton()
     {
         Time.timeScale = 1.0f;
         _pauseMenu.SetActive(false);
-        _pauseButton.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.None;
-        Panel.gameObject.SetActive(true);
-
+        Paused = false;
     }
 }
