@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Timer : MonoBehaviour
 {
-    public float timeLeft; // The amount of time in seconds
+    float timeLeft; // The amount of time in seconds
     Text timerText;             // The UI Text object to display the timer
     TestLevel testLevel;
      
@@ -36,6 +36,7 @@ public class Timer : MonoBehaviour
         float seconds = Mathf.RoundToInt(timeLeft % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
     public void SetTimer(float time)
     {
         timeLeft = time;

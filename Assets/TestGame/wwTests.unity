@@ -169,6 +169,7 @@ MonoBehaviour:
   timer: {fileID: 1107483016}
   progressBar: {fileID: 1761629728}
   checkBoxPrefab: {fileID: 363600529183956794, guid: 5ca3ae465b9c92949a0c4da3f41732de, type: 3}
+  timeLeft: 90
 --- !u!114 &215050204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,7 +1039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ced2a988b7993419d26fc0c6f34bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 90
 --- !u!1 &1299536828
 GameObject:
   m_ObjectHideFlags: 0

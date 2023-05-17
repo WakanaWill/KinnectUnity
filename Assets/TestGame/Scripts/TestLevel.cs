@@ -32,6 +32,7 @@ public class TestLevel : MonoBehaviour
 
 	private int lvl = 0;
 
+	public float timeLeft;
 
 
 	void Start()
@@ -139,7 +140,7 @@ public class TestLevel : MonoBehaviour
 		}
 		nextMoveText.text = movesMade.ToString();
 		timer.SetActive(true);
-		timer.GetComponent<Timer>().SetTimer(60.0f - (lvl * 5.0f));
+		timer.GetComponent<Timer>().SetTimer(timeLeft - (lvl * 5.0f));
 	}
 
 	IEnumerator NextGame()
