@@ -1,0 +1,13 @@
+RightHandUp
+LeftHandUp
+Tpose
+Psi
+Wave
+SwipeLeft
+SwipeRight
+SwipeUp
+SwipeDown
+Squat
+Jump
+stand(domyslana poza. idk czy przydatne na cokolwiek)
+
