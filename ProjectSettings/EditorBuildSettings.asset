@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TestGame/MainScene.unity
     guid: 9f88a061ddb6137479f5908e72559bdc
+  - enabled: 1
+    path: Assets/TestGame/wwTests.unity
+    guid: 4bb195a185c2ee541856c68482fa4a89
   m_configObjects: {}

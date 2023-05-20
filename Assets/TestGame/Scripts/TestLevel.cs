@@ -10,6 +10,7 @@ public class TestLevel : MonoBehaviour
 
 	public bool autoChangeAlfterDelay = false;
 
+	[SerializeField] GameObject taskBar;
 	public Text nextMoveText;
 	public int movesToMake = 5;
 	private int movesMade;
@@ -23,15 +24,17 @@ public class TestLevel : MonoBehaviour
 	bool isGameEnded = false;
 
 	[SerializeField] GameObject timer;
+    public float timeLeft;
 
 
-	public Transform progressBar;
+    public Transform progressBar;
 	public GameObject checkBoxPrefab;
 	private List<GameObject> checkBoxPrefabsList;
 	private PlayerGestures gestureListener;
 
 	private int lvl = 0;
 
+	
 
 
 	void Start()
@@ -119,7 +122,8 @@ public class TestLevel : MonoBehaviour
 
 	public void GameLost()
 	{
-		nextMoveText.text = "Game Lost";
+        taskBar.SetActive(true);
+        nextMoveText.text = "Game Lost";
 		isGameEnded = true;
 		currentMoveToBeMade = null;
 		timer.SetActive(false);
@@ -138,14 +142,16 @@ public class TestLevel : MonoBehaviour
 			yield return new WaitForSeconds(2f);
 		}
 		nextMoveText.text = movesMade.ToString();
+		taskBar.SetActive(false);
 		timer.SetActive(true);
-		timer.GetComponent<Timer>().SetTimer(60.0f - (lvl * 5.0f));
+		timer.GetComponent<Timer>().SetTimer(timeLeft - (lvl * 5.0f));
 	}
 
 	IEnumerator NextGame()
 	{
 		timer.SetActive(false);
-		nextMoveText.text = "Congratulations";
+        taskBar.SetActive(true);
+        nextMoveText.text = "Congratulations";
 		checkBoxPrefabsList = new List<GameObject>();
 		yield return new WaitForSeconds(5f);
 		
