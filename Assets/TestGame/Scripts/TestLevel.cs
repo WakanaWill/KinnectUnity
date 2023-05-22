@@ -34,11 +34,15 @@ public class TestLevel : MonoBehaviour
 
 	private int lvl = 0;
 
-	
+	[SerializeField] Animator animator;
 
 
-	void Start()
+
+
+		void Start()
 	{
+
+
 		// hide mouse cursor
 		Cursor.visible = false;
 		timer.SetActive(false);
@@ -129,6 +133,8 @@ public class TestLevel : MonoBehaviour
 		timer.SetActive(false);
 	}
 
+	
+
 
 	IEnumerator ShowAllMovesToMake()
 	{
@@ -136,6 +142,7 @@ public class TestLevel : MonoBehaviour
 
 		while (movesToShow < movesToMake)
 		{
+			animator.SetTrigger(currentMovesToMakeTextList[movesToShow]);
 			nextMoveText.text = currentMovesToMakeTextList[movesToShow];
 
 			movesToShow++;
