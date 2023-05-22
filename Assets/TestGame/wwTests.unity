@@ -163,10 +163,8 @@ MonoBehaviour:
   movesToMake: 1
   progress: {fileID: 266249429}
   movesTextList:
-  - SwipeLeft
-  - SwipeRight
-  - Tpose
-  - Jump
+  - SitDown
+  - JumpingJack
   timer: {fileID: 1107483016}
   timeLeft: 90
   progressBar: {fileID: 1761629728}
