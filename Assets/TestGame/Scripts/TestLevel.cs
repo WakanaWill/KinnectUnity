@@ -151,7 +151,7 @@ public class TestLevel : MonoBehaviour
 		nextMoveText.text = movesMade.ToString();
 		taskBar.SetActive(false);
 		timer.SetActive(true);
-		timer.GetComponent<Timer>().SetTimer(timeLeft - (lvl * 5.0f));
+		timer.GetComponent<Timer>().SetTimer(90);
 	}
 
 	IEnumerator NextGame()
@@ -161,8 +161,8 @@ public class TestLevel : MonoBehaviour
         nextMoveText.text = "Congratulations";
 		checkBoxPrefabsList = new List<GameObject>();
 		yield return new WaitForSeconds(5f);
-		
 
+		movesToMake++;
 		currentMovesToMakeTextList = new List<string>();
 
 		for (int i = 0; i < movesToMake; i++)
