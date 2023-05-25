@@ -217,13 +217,20 @@ MonoBehaviour:
   autoChangeAlfterDelay: 0
   taskBar: {fileID: 2098670843}
   nextMoveText: {fileID: 1438339056}
-  movesToMake: 1
+  movesToMake: 5
   progress: {fileID: 266249429}
   movesTextList:
   - SwipeLeft
   - SwipeRight
   - Tpose
   - Jump
+  - RightHandUp
+  - LeftHandDown
+  - Psi
+  - SwipeUp
+  - SwipeDown
+  - Squat
+  - Wave
   timer: {fileID: 1107483016}
   timeLeft: 90
   progressBar: {fileID: 1761629728}

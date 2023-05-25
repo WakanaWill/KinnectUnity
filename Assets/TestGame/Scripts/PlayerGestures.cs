@@ -11,6 +11,14 @@ public class PlayerGestures : MonoBehaviour, KinectGestures.GestureListenerInter
 	private bool swipeRight;
 	private bool tPose;
 	private bool jump;
+	private bool rightHandUp;
+	private bool leftHandUp;
+	private bool psi;
+	private bool wave;
+	private bool swipeUp;
+	private bool swipeDown;
+	private bool squat;
+
 
 
 	public bool IsSwipeLeft()
@@ -57,6 +65,83 @@ public class PlayerGestures : MonoBehaviour, KinectGestures.GestureListenerInter
 		return false;
 	}
 
+	public bool IsRightHandUp()
+	{
+		if (rightHandUp)
+		{
+			rightHandUp = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsLeftHandUp()
+	{
+		if (leftHandUp)
+		{
+			leftHandUp = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsPsi()
+	{
+		if (psi)
+		{
+			psi = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsSwipeUp()
+	{
+		if (swipeUp)
+		{
+			swipeUp = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsSwipeDown()
+	{
+		if (swipeDown)
+		{
+			swipeDown = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsWave()
+	{
+		if (wave)
+		{
+			wave = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	public bool IsSquat()
+	{
+		if (squat)
+		{
+			squat = false;
+			return true;
+		}
+
+		return false;
+	}
+
 
 	public void UserDetected(uint userId, int userIndex)
 	{
@@ -67,8 +152,16 @@ public class PlayerGestures : MonoBehaviour, KinectGestures.GestureListenerInter
 		manager.DetectGesture(userId, KinectGestures.Gestures.SwipeRight);
 		manager.DetectGesture(userId, KinectGestures.Gestures.Tpose);
 		manager.DetectGesture(userId, KinectGestures.Gestures.Jump);
+		manager.DetectGesture(userId, KinectGestures.Gestures.RaiseRightHand);
+		manager.DetectGesture(userId, KinectGestures.Gestures.RaiseLeftHand);
+		manager.DetectGesture(userId, KinectGestures.Gestures.Psi);
+		manager.DetectGesture(userId, KinectGestures.Gestures.Wave);
+		manager.DetectGesture(userId, KinectGestures.Gestures.Squat);
 
-		
+		manager.DetectGesture(userId, KinectGestures.Gestures.SwipeDown);
+		manager.DetectGesture(userId, KinectGestures.Gestures.SwipeUp);
+
+
 	}
 
 	public void UserLost(uint userId, int userIndex)
@@ -102,7 +195,21 @@ public class PlayerGestures : MonoBehaviour, KinectGestures.GestureListenerInter
 			tPose = true;
 		else if (gesture == KinectGestures.Gestures.Jump)
 			jump = true;
-
+		else if (gesture == KinectGestures.Gestures.RaiseLeftHand)
+			leftHandUp = true;
+		else if (gesture == KinectGestures.Gestures.RaiseRightHand)
+			rightHandUp = true;
+		else if (gesture == KinectGestures.Gestures.Psi)
+			psi = true;
+		else if (gesture == KinectGestures.Gestures.SwipeUp)
+			swipeUp = true;
+		else if (gesture == KinectGestures.Gestures.SwipeDown)
+			swipeDown = true;
+		else if (gesture == KinectGestures.Gestures.Wave)
+			wave = true;
+		else if (gesture == KinectGestures.Gestures.Squat)
+			squat = true;
+		
 		return true;
 	}
 

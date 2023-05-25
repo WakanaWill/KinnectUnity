@@ -29,7 +29,6 @@ public class TestLevel : MonoBehaviour
 
     public Transform progressBar;
 	public GameObject checkBoxPrefab;
-	private List<GameObject> checkBoxPrefabsList;
 	private PlayerGestures gestureListener;
 
 	private int lvl = 0;
@@ -99,7 +98,48 @@ public class TestLevel : MonoBehaviour
 		{
 			if (gestureListener.IsJump())
 				NextMove();
+		}
 
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "RightHandUp")
+		{
+			if (gestureListener.IsRightHandUp())
+				NextMove();
+		}
+
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "LeftHandDown")
+		{
+			if (gestureListener.IsLeftHandUp())
+				NextMove();
+		}
+
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Psi")
+		{
+			if (gestureListener.IsPsi())
+				NextMove();
+		}
+
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeUp")
+		{
+			if (gestureListener.IsSwipeUp())
+				NextMove();
+		}
+
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeDown")
+		{
+			if (gestureListener.IsSwipeDown())
+				NextMove();
+		}
+
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Squat")
+		{
+			if (gestureListener.IsSquat())
+				NextMove();
+		}
+
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Wave")
+		{
+			if (gestureListener.IsWave())
+				NextMove();
 		}
 
 
@@ -159,7 +199,6 @@ public class TestLevel : MonoBehaviour
 		timer.SetActive(false);
         taskBar.SetActive(true);
         nextMoveText.text = "Congratulations";
-		checkBoxPrefabsList = new List<GameObject>();
 		yield return new WaitForSeconds(5f);
 
 		movesToMake++;
