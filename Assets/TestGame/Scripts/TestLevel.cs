@@ -36,11 +36,13 @@ public class TestLevel : MonoBehaviour
 	[SerializeField] Animator animator;
 
 
+	int score = 0;
 
 
-		void Start()
+
+	void Start()
 	{
-
+		Debug.Log(PlayerPrefs.GetInt("score"));
 
 		// hide mouse cursor
 		Cursor.visible = false;
@@ -158,6 +160,7 @@ public class TestLevel : MonoBehaviour
 	private void NextMove()
 	{
 		if (movesMade >= movesToMake || isGameEnded) return;
+		score++;
 		movesMade++;
 		nextMoveText.text = movesMade.ToString();
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
@@ -166,6 +169,8 @@ public class TestLevel : MonoBehaviour
 
 	public void GameLost()
 	{
+		if(PlayerPrefs.GetInt("score") < score)
+			PlayerPrefs.SetInt("score", score);
         taskBar.SetActive(true);
         nextMoveText.text = "Game Lost";
 		isGameEnded = true;
