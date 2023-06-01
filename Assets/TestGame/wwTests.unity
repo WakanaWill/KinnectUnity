@@ -217,7 +217,7 @@ MonoBehaviour:
   autoChangeAlfterDelay: 0
   taskBar: {fileID: 2098670843}
   nextMoveText: {fileID: 1438339056}
-  movesToMake: 5
+  movesToMake: 3
   progress: {fileID: 266249429}
   movesTextList:
   - SwipeLeft

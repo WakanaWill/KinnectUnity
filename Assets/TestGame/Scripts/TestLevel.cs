@@ -202,13 +202,10 @@ public class TestLevel : MonoBehaviour
 		yield return new WaitForSeconds(5f);
 
 		movesToMake++;
-		currentMovesToMakeTextList = new List<string>();
 
-		for (int i = 0; i < movesToMake; i++)
-		{
-			int randomIndex = Random.Range(0, movesTextList.Count);
-			currentMovesToMakeTextList.Add(movesTextList[randomIndex]);
-		}
+		int randomIndex = Random.Range(0, movesTextList.Count);
+		currentMovesToMakeTextList.Add(movesTextList[randomIndex]);
+		
 
 		movesMade = 0;
 
