@@ -24,10 +24,12 @@ public class TestLevel : MonoBehaviour
 	bool isGameEnded = false;
 
 	[SerializeField] GameObject timer;
+	[SerializeField] GameObject timerBar;
     public float timeLeft;
 
 
     public Transform progressBar;
+	[SerializeField] GameObject progressCounter;
 	public GameObject checkBoxPrefab;
 	private PlayerGestures gestureListener;
 
@@ -46,9 +48,14 @@ public class TestLevel : MonoBehaviour
 
 		// hide mouse cursor
 		Cursor.visible = false;
-		timer.SetActive(false);
+        timerBar.SetActive(false);
+        timerBar.SetActive(false);
+        progressCounter.SetActive(false);
+        
 
-		currentMovesToMakeTextList = new List<string>();
+
+
+        currentMovesToMakeTextList = new List<string>();
 
 		// get the gestures listener
 		gestureListener = Camera.main.GetComponent<PlayerGestures>();
@@ -175,8 +182,9 @@ public class TestLevel : MonoBehaviour
         nextMoveText.text = "Game Lost";
 		isGameEnded = true;
 		currentMoveToBeMade = null;
-		timer.SetActive(false);
-	}
+        timerBar.SetActive(false);
+        progressCounter.SetActive(false);
+    }
 
 	
 
@@ -195,13 +203,15 @@ public class TestLevel : MonoBehaviour
 		}
 		nextMoveText.text = movesMade.ToString();
 		taskBar.SetActive(false);
-		timer.SetActive(true);
-		timer.GetComponent<Timer>().SetTimer(90);
+        timerBar.SetActive(true);
+        progressCounter.SetActive(true);
+        timer.GetComponent<Timer>().SetTimer(90);
 	}
 
 	IEnumerator NextGame()
 	{
-		timer.SetActive(false);
+        timerBar.SetActive(false);
+        progressCounter.SetActive(false);
         taskBar.SetActive(true);
         nextMoveText.text = "Congratulations";
 		yield return new WaitForSeconds(5f);
