@@ -37,10 +37,10 @@ public class TestLevel : MonoBehaviour
 
 	[SerializeField] Animator animator;
 
+	public GameObject gameOver;
+	public static int score = 0;
 
-	int score = 0;
-
-
+	
 
 	void Start()
 	{
@@ -74,8 +74,9 @@ public class TestLevel : MonoBehaviour
 
 	void Update()
 	{
-		// dont run Update() if there is no user
-		KinectManager kinectManager = KinectManager.Instance;
+        
+        // dont run Update() if there is no user
+        KinectManager kinectManager = KinectManager.Instance;
 		if (autoChangeAlfterDelay && (!kinectManager || !kinectManager.IsInitialized() || !kinectManager.IsUserDetected()))
 			return;
 
@@ -184,6 +185,7 @@ public class TestLevel : MonoBehaviour
 		currentMoveToBeMade = null;
         timerBar.SetActive(false);
         progressCounter.SetActive(false);
+		gameOver.SetActive(true);
     }
 
 	
@@ -205,7 +207,7 @@ public class TestLevel : MonoBehaviour
 		taskBar.SetActive(false);
         timerBar.SetActive(true);
         progressCounter.SetActive(true);
-        timer.GetComponent<Timer>().SetTimer(90);
+        timer.GetComponent<Timer>().SetTimer(60);
 	}
 
 	IEnumerator NextGame()
@@ -227,7 +229,6 @@ public class TestLevel : MonoBehaviour
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
 		StartCoroutine(ShowAllMovesToMake());
 	}
-
 
 
 
