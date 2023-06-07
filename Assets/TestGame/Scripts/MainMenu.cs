@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _pauseMenu;
-    [SerializeField] private GameObject _pauseButton;
-
     public void PlayGame()
     {
         SceneManager.LoadScene("wwTests");
@@ -21,19 +18,5 @@ public class MainMenu : MonoBehaviour
     public void ReturnToMenu()
     {
         SceneManager.LoadScene("MainMenu");
-    }
-
-    public void PauseButton()
-    {
-        Time.timeScale = 0f;
-        _pauseMenu.SetActive(true);
-        _pauseButton.SetActive(false);
-    }
-    public void ResumeButton()
-    {
-        Time.timeScale = 1.0f;
-        _pauseMenu.SetActive(false);
-        _pauseButton.SetActive(true);
-
     }
 }

@@ -24,10 +24,12 @@ public class TestLevel : MonoBehaviour
 	bool isGameEnded = false;
 
 	[SerializeField] GameObject timer;
+	[SerializeField] GameObject timerBar;
     public float timeLeft;
 
 
     public Transform progressBar;
+	[SerializeField] GameObject progressCounter;
 	public GameObject checkBoxPrefab;
 	private PlayerGestures gestureListener;
 
@@ -35,20 +37,29 @@ public class TestLevel : MonoBehaviour
 
 	[SerializeField] Animator animator;
 
-
+	public GameObject gameOver;
 	int score = 0;
 
 
+	[SerializeField] Text highScoreText;
+
+	
 
 	void Start()
 	{
 		Debug.Log(PlayerPrefs.GetInt("score"));
+		score = 0;
 
 		// hide mouse cursor
 		Cursor.visible = false;
-		timer.SetActive(false);
+        timerBar.SetActive(false);
+        timerBar.SetActive(false);
+        progressCounter.SetActive(false);
+        
 
-		currentMovesToMakeTextList = new List<string>();
+
+
+        currentMovesToMakeTextList = new List<string>();
 
 		// get the gestures listener
 		gestureListener = Camera.main.GetComponent<PlayerGestures>();
@@ -67,8 +78,9 @@ public class TestLevel : MonoBehaviour
 
 	void Update()
 	{
-		// dont run Update() if there is no user
-		KinectManager kinectManager = KinectManager.Instance;
+        
+        // dont run Update() if there is no user
+        KinectManager kinectManager = KinectManager.Instance;
 		if (autoChangeAlfterDelay && (!kinectManager || !kinectManager.IsInitialized() || !kinectManager.IsUserDetected()))
 			return;
 
@@ -170,13 +182,20 @@ public class TestLevel : MonoBehaviour
 	public void GameLost()
 	{
 		if(PlayerPrefs.GetInt("score") < score)
+        {
 			PlayerPrefs.SetInt("score", score);
-        taskBar.SetActive(true);
-        nextMoveText.text = "Game Lost";
+			highScoreText.text = $"New High Score: {PlayerPrefs.GetInt("score", 0)}!";
+		}else
+			highScoreText.text = $"Your Score: {score}";
+
+		taskBar.SetActive(true);
+        nextMoveText.text = "Game Over";
 		isGameEnded = true;
 		currentMoveToBeMade = null;
-		timer.SetActive(false);
-	}
+        timerBar.SetActive(false);
+        progressCounter.SetActive(false);
+		gameOver.SetActive(true);
+    }
 
 	
 
@@ -195,13 +214,15 @@ public class TestLevel : MonoBehaviour
 		}
 		nextMoveText.text = movesMade.ToString();
 		taskBar.SetActive(false);
-		timer.SetActive(true);
-		timer.GetComponent<Timer>().SetTimer(90);
+        timerBar.SetActive(true);
+        progressCounter.SetActive(true);
+        timer.GetComponent<Timer>().SetTimer(2);
 	}
 
 	IEnumerator NextGame()
 	{
-		timer.SetActive(false);
+        timerBar.SetActive(false);
+        progressCounter.SetActive(false);
         taskBar.SetActive(true);
         nextMoveText.text = "Congratulations";
 		yield return new WaitForSeconds(5f);
