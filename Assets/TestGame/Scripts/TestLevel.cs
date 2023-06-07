@@ -38,13 +38,17 @@ public class TestLevel : MonoBehaviour
 	[SerializeField] Animator animator;
 
 	public GameObject gameOver;
-	public static int score = 0;
+	int score = 0;
+
+
+	[SerializeField] Text highScoreText;
 
 	
 
 	void Start()
 	{
 		Debug.Log(PlayerPrefs.GetInt("score"));
+		score = 0;
 
 		// hide mouse cursor
 		Cursor.visible = false;
@@ -178,9 +182,14 @@ public class TestLevel : MonoBehaviour
 	public void GameLost()
 	{
 		if(PlayerPrefs.GetInt("score") < score)
+        {
 			PlayerPrefs.SetInt("score", score);
-        taskBar.SetActive(true);
-        nextMoveText.text = "Game Lost";
+			highScoreText.text = $"New High Score: {PlayerPrefs.GetInt("score", 0)}!";
+		}else
+			highScoreText.text = $"Your Score: {score}";
+
+		taskBar.SetActive(true);
+        nextMoveText.text = "Game Over";
 		isGameEnded = true;
 		currentMoveToBeMade = null;
         timerBar.SetActive(false);
@@ -207,7 +216,7 @@ public class TestLevel : MonoBehaviour
 		taskBar.SetActive(false);
         timerBar.SetActive(true);
         progressCounter.SetActive(true);
-        timer.GetComponent<Timer>().SetTimer(60);
+        timer.GetComponent<Timer>().SetTimer(2);
 	}
 
 	IEnumerator NextGame()
@@ -229,6 +238,7 @@ public class TestLevel : MonoBehaviour
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
 		StartCoroutine(ShowAllMovesToMake());
 	}
+
 
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-
+/*
 public class GameManager : MonoBehaviour
 {
     
@@ -38,3 +38,4 @@ public class GameManager : MonoBehaviour
         highScore.text = $"High Score: {PlayerPrefs.GetInt("HighScore", 0)}";
     }
 }
+*/
