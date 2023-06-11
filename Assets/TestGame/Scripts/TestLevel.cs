@@ -25,7 +25,7 @@ public class TestLevel : MonoBehaviour
 
 	[SerializeField] GameObject timer;
 	[SerializeField] GameObject timerBar;
-    public float timeLeft;
+	public float timeLeft;
 
 
     public Transform progressBar;
@@ -43,6 +43,8 @@ public class TestLevel : MonoBehaviour
 
 	[SerializeField] Text highScoreText;
 
+	[SerializeField] GameObject counterDown;
+
 	
 
 	void Start()
@@ -55,11 +57,11 @@ public class TestLevel : MonoBehaviour
         timerBar.SetActive(false);
         timerBar.SetActive(false);
         progressCounter.SetActive(false);
-        
+		taskBar.SetActive(false);
 
 
 
-        currentMovesToMakeTextList = new List<string>();
+		currentMovesToMakeTextList = new List<string>();
 
 		// get the gestures listener
 		gestureListener = Camera.main.GetComponent<PlayerGestures>();
@@ -73,7 +75,7 @@ public class TestLevel : MonoBehaviour
 		movesMade = 0;
 
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
-		StartCoroutine(ShowAllMovesToMake());
+		StartCoroutine(CounterDown());
 	}
 
 	void Update()
@@ -216,7 +218,7 @@ public class TestLevel : MonoBehaviour
 		taskBar.SetActive(false);
         timerBar.SetActive(true);
         progressCounter.SetActive(true);
-        timer.GetComponent<Timer>().SetTimer(2);
+        timer.GetComponent<Timer>().SetTimer(60f);
 	}
 
 	IEnumerator NextGame()
@@ -225,7 +227,7 @@ public class TestLevel : MonoBehaviour
         progressCounter.SetActive(false);
         taskBar.SetActive(true);
         nextMoveText.text = "Congratulations";
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(3f);
 
 		movesToMake++;
 
@@ -236,6 +238,23 @@ public class TestLevel : MonoBehaviour
 		movesMade = 0;
 
 		currentMoveToBeMade = currentMovesToMakeTextList[movesMade];
+		StartCoroutine(ShowAllMovesToMake());
+	}
+
+	IEnumerator CounterDown()
+	{
+		
+		int counter = 3;
+		Text counterDownText = counterDown.GetComponentInChildren<Text>();
+
+		while (counter > 0)
+		{
+			counterDownText.text = counter.ToString();
+			counter--;
+			yield return new WaitForSeconds(1f);
+		}
+		taskBar.SetActive(true);
+		counterDown.SetActive(false);
 		StartCoroutine(ShowAllMovesToMake());
 	}
 
