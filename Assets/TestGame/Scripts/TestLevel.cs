@@ -27,8 +27,6 @@ public class TestLevel : MonoBehaviour
 	[SerializeField] GameObject timerBar;
 	public float timeLeft;
 
-
-    public Transform progressBar;
 	[SerializeField] GameObject progressCounter;
 	public GameObject checkBoxPrefab;
 	private PlayerGestures gestureListener;
@@ -226,7 +224,8 @@ public class TestLevel : MonoBehaviour
         timerBar.SetActive(false);
         progressCounter.SetActive(false);
         taskBar.SetActive(true);
-        nextMoveText.text = "Congratulations";
+        nextMoveText.text = "You did it!";
+		animator.SetTrigger("Clap");
 		yield return new WaitForSeconds(3f);
 
 		movesToMake++;
