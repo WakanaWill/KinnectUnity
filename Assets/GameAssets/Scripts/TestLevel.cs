@@ -43,7 +43,15 @@ public class TestLevel : MonoBehaviour
 
 	[SerializeField] GameObject counterDown;
 
-	
+
+	[SerializeField] AudioSource counterDownSFX;
+	[SerializeField] AudioSource counterDownLastSFX;
+	[SerializeField] AudioSource correctMoveSFX;
+	[SerializeField] AudioSource finishedRoundSFX;
+	[SerializeField] AudioSource gameOverSFX;
+
+
+
 
 	void Start()
 	{
@@ -52,9 +60,9 @@ public class TestLevel : MonoBehaviour
 
 		// hide mouse cursor
 		Cursor.visible = false;
-        timerBar.SetActive(false);
-        timerBar.SetActive(false);
-        progressCounter.SetActive(false);
+		timerBar.SetActive(false);
+		timerBar.SetActive(false);
+		progressCounter.SetActive(false);
 		taskBar.SetActive(false);
 
 
@@ -78,9 +86,9 @@ public class TestLevel : MonoBehaviour
 
 	void Update()
 	{
-        
-        // dont run Update() if there is no user
-        KinectManager kinectManager = KinectManager.Instance;
+
+		// dont run Update() if there is no user
+		KinectManager kinectManager = KinectManager.Instance;
 		if (autoChangeAlfterDelay && (!kinectManager || !kinectManager.IsInitialized() || !kinectManager.IsUserDetected()))
 			return;
 
@@ -172,6 +180,8 @@ public class TestLevel : MonoBehaviour
 	private void NextMove()
 	{
 		if (movesMade >= movesToMake || isGameEnded) return;
+		if(movesToMake - movesMade != 1)
+			correctMoveSFX.Play();
 		score++;
 		movesMade++;
 		nextMoveText.text = movesMade.ToString();
@@ -181,23 +191,25 @@ public class TestLevel : MonoBehaviour
 
 	public void GameLost()
 	{
-		if(PlayerPrefs.GetInt("score") < score)
-        {
+		gameOverSFX.Play();
+		if (PlayerPrefs.GetInt("score") < score)
+		{
 			PlayerPrefs.SetInt("score", score);
 			highScoreText.text = $"New High Score: {PlayerPrefs.GetInt("score", 0)}!";
-		}else
+		}
+		else
 			highScoreText.text = $"Your Score: {score}";
 
 		taskBar.SetActive(true);
-        nextMoveText.text = "Game Over";
+		nextMoveText.text = "Game Over";
 		isGameEnded = true;
 		currentMoveToBeMade = null;
-        timerBar.SetActive(false);
-        progressCounter.SetActive(false);
+		timerBar.SetActive(false);
+		progressCounter.SetActive(false);
 		gameOver.SetActive(true);
-    }
+	}
 
-	
+
 
 
 	IEnumerator ShowAllMovesToMake()
@@ -214,17 +226,18 @@ public class TestLevel : MonoBehaviour
 		}
 		nextMoveText.text = movesMade.ToString();
 		taskBar.SetActive(false);
-        timerBar.SetActive(true);
-        progressCounter.SetActive(true);
-        timer.GetComponent<Timer>().SetTimer(60f);
+		timerBar.SetActive(true);
+		progressCounter.SetActive(true);
+		timer.GetComponent<Timer>().SetTimer(10f);
 	}
 
 	IEnumerator NextGame()
 	{
-        timerBar.SetActive(false);
-        progressCounter.SetActive(false);
-        taskBar.SetActive(true);
-        nextMoveText.text = "You did it!";
+		finishedRoundSFX.Play();
+		timerBar.SetActive(false);
+		progressCounter.SetActive(false);
+		taskBar.SetActive(true);
+		nextMoveText.text = "You did it!";
 		animator.SetTrigger("Clap");
 		yield return new WaitForSeconds(3f);
 
@@ -232,7 +245,7 @@ public class TestLevel : MonoBehaviour
 
 		int randomIndex = Random.Range(0, movesTextList.Count);
 		currentMovesToMakeTextList.Add(movesTextList[randomIndex]);
-		
+
 
 		movesMade = 0;
 
@@ -242,16 +255,18 @@ public class TestLevel : MonoBehaviour
 
 	IEnumerator CounterDown()
 	{
-		
+
 		int counter = 3;
 		Text counterDownText = counterDown.GetComponentInChildren<Text>();
 
 		while (counter > 0)
 		{
+			counterDownSFX.Play();
 			counterDownText.text = counter.ToString();
 			counter--;
 			yield return new WaitForSeconds(1f);
 		}
+		counterDownLastSFX.Play();
 		taskBar.SetActive(true);
 		counterDown.SetActive(false);
 		StartCoroutine(ShowAllMovesToMake());

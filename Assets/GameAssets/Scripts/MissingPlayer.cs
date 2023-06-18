@@ -11,7 +11,7 @@ public class MissingPlayer : MonoBehaviour
     [SerializeField] GameObject missingPopUp;
     [SerializeField] Text text;
 
-   
+    [SerializeField] AudioSource warningSFX;
     private void Update()
     {
         /*if(!KinectManager.IsKinectInitialized())
@@ -30,6 +30,7 @@ public class MissingPlayer : MonoBehaviour
 
         if (!KinectManager.Instance.IsUserDetected() && KinectManager.IsKinectInitialized())
         {
+            warningSFX.Play();
             Time.timeScale = 0;
             missingPopUp.SetActive(true);
             text.text = "Please stand back\r\nin the view of the sensor";
