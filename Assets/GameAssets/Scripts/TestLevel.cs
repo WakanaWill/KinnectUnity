@@ -50,7 +50,7 @@ public class TestLevel : MonoBehaviour
 	[SerializeField] AudioSource finishedRoundSFX;
 	[SerializeField] AudioSource gameOverSFX;
 
-
+	bool canReadInput = false;
 
 
 	void Start()
@@ -98,67 +98,67 @@ public class TestLevel : MonoBehaviour
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeLeft")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeLeft" && canReadInput)
 		{
 			if (gestureListener.IsSwipeLeft())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeRight")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeRight" && canReadInput)
 		{
 			if (gestureListener.IsSwipeRight())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Tpose")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Tpose" && canReadInput)
 		{
 			if (gestureListener.IsTpose())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Jump")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Jump" && canReadInput)
 		{
 			if (gestureListener.IsJump())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "RightHandUp")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "RightHandUp" && canReadInput)
 		{
 			if (gestureListener.IsRightHandUp())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "LeftHandDown")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "LeftHandUp" && canReadInput)
 		{
 			if (gestureListener.IsLeftHandUp())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Psi")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Psi" && canReadInput)
 		{
 			if (gestureListener.IsPsi())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeUp")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeUp" && canReadInput)
 		{
 			if (gestureListener.IsSwipeUp())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeDown")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "SwipeDown" && canReadInput)
 		{
 			if (gestureListener.IsSwipeDown())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Squat")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Squat" && canReadInput)
 		{
 			if (gestureListener.IsSquat())
 				NextMove();
 		}
 
-		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Wave")
+		if (slideChangeWithGestures && gestureListener && currentMoveToBeMade == "Wave" && canReadInput)
 		{
 			if (gestureListener.IsWave())
 				NextMove();
@@ -182,6 +182,7 @@ public class TestLevel : MonoBehaviour
 		if (movesMade >= movesToMake || isGameEnded) return;
 		if(movesToMake - movesMade != 1)
 			correctMoveSFX.Play();
+		StartCoroutine(WaitAfterReadingInput());
 		score++;
 		movesMade++;
 		nextMoveText.text = movesMade.ToString();
@@ -215,11 +216,12 @@ public class TestLevel : MonoBehaviour
 	IEnumerator ShowAllMovesToMake()
 	{
 		int movesToShow = 0;
-
+		canReadInput = false;
 		while (movesToShow < movesToMake)
 		{
 			animator.SetTrigger(currentMovesToMakeTextList[movesToShow]);
 			nextMoveText.text = currentMovesToMakeTextList[movesToShow];
+			Debug.Log(currentMovesToMakeTextList[movesToShow]);
 
 			movesToShow++;
 			yield return new WaitForSeconds(2f);
@@ -228,7 +230,8 @@ public class TestLevel : MonoBehaviour
 		taskBar.SetActive(false);
 		timerBar.SetActive(true);
 		progressCounter.SetActive(true);
-		timer.GetComponent<Timer>().SetTimer(10f);
+		timer.GetComponent<Timer>().SetTimer(60f);
+		canReadInput = true;
 	}
 
 	IEnumerator NextGame()
@@ -271,6 +274,15 @@ public class TestLevel : MonoBehaviour
 		counterDown.SetActive(false);
 		StartCoroutine(ShowAllMovesToMake());
 	}
+
+
+	IEnumerator WaitAfterReadingInput()
+	{
+		canReadInput = false;
+		yield return new WaitForSeconds(1f);
+		canReadInput = true;
+	}
+
 
 
 
